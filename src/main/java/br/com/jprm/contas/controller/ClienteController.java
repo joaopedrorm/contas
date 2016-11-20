@@ -16,36 +16,36 @@ import br.com.jprm.contas.service.ClienteService;
 @Controller
 public class ClienteController {
 
-	private ClienteService clienteService;
-	
-	@Autowired
-	public ClienteController(ClienteService clienteService) {
-		this.clienteService = clienteService;
-	}
-	
-	@GetMapping("/clientes")
-	public String getClientes(Cliente cliente, Model model){
-		model.addAttribute("listaClientes", clienteService.getClientes());
-		model.addAttribute("formCliente", cliente);
-		return "clientes";
-	}
-	
-	@PostMapping("/cliente")
-	public String saveClientes(@Valid Cliente cliente, BindingResult bindingResult, RedirectAttributes redirectAttributes){
-		if(bindingResult.hasErrors()){
-			redirectAttributes.addFlashAttribute("errorMessage", "Erro ao tentar salvar cliente");
-		} else {
-			clienteService.saveCliente(cliente);
-		}
-		return "redirect:/clientes";
-	}
-	
-	
-	@GetMapping("/genMock")
-	public String getClientes(RedirectAttributes redirectAttributes){
-		
-		clienteService.generateMockData();
-		
-		return "redirect:/clientes";
-	}
+  private ClienteService clienteService;
+
+  @Autowired
+  public ClienteController(ClienteService clienteService) {
+    this.clienteService = clienteService;
+  }
+
+  @GetMapping("/clientes")
+  public String getClientes(Cliente cliente, Model model) {
+    model.addAttribute("listaClientes", clienteService.getClientes());
+    model.addAttribute("formCliente", cliente);
+    return "clientes";
+  }
+
+  @PostMapping("/cliente")
+  public String saveClientes(@Valid Cliente cliente, BindingResult bindingResult,
+      RedirectAttributes redirectAttributes) {
+    if (bindingResult.hasErrors()) {
+      redirectAttributes.addFlashAttribute("errorMessage", "Erro ao tentar salvar cliente");
+    } else {
+      clienteService.saveCliente(cliente);
+    }
+    return "redirect:/clientes";
+  }
+
+  @GetMapping("/genMock")
+  public String getClientes(RedirectAttributes redirectAttributes) {
+
+    clienteService.generateMockData();
+
+    return "redirect:/clientes";
+  }
 }
